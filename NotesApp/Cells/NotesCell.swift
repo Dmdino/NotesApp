@@ -10,16 +10,27 @@ import UIKit
 
 class NotesCell: UITableViewCell {
     
+    var noteData: Note? {
+        didSet {
+            let dateFormater = DateFormatter()
+            dateFormater.dateFormat = "dd MM, yyyy "
+            guard let noteData = noteData else {return}
+            noteLabel.text = noteData.title
+            dateLabel.text = dateFormater.string(from: noteData.date)
+            previewLabel.text = noteData.text
+        }
+    }
+    
     // MARK: - Properties
     
-    fileprivate var noteLabel: UILabel = {
+     var noteLabel: UILabel = {
         let label = UILabel()
         label.text = "Place for text"
         label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         return label
     }()
     
-    fileprivate var dateLabel: UILabel = {
+     var dateLabel: UILabel = {
         let label = UILabel()
         label.text = "9/15/97"
         label.font = UIFont.systemFont(ofSize: 14, weight: .light)
@@ -27,7 +38,7 @@ class NotesCell: UITableViewCell {
         return label
     }()
     
-    fileprivate var previewLabel: UILabel = {
+     var previewLabel: UILabel = {
         let label = UILabel()
         label.text = "the note text will go here to create a preview...."
         label.font = UIFont.systemFont(ofSize: 13, weight: .light)
@@ -35,7 +46,7 @@ class NotesCell: UITableViewCell {
         return label
     }()
     
-    fileprivate lazy var horizontalStackView: UIStackView = {
+     lazy var horizontalStackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [dateLabel, previewLabel, UIView()])
         stack.axis = .horizontal
         stack.spacing = 10
@@ -43,7 +54,7 @@ class NotesCell: UITableViewCell {
         return stack
     }()
     
-    fileprivate lazy var verticalStackView: UIStackView = {
+     lazy var verticalStackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [noteLabel, horizontalStackView])
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = .vertical

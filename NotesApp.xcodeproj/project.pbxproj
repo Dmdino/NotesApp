@@ -16,6 +16,8 @@
 		D8F45D3422CD4A4A006E087D /* NoteDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F45D3322CD4A4A006E087D /* NoteDetailController.swift */; };
 		D8F45D3722CE990B006E087D /* FolderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F45D3622CE990B006E087D /* FolderCell.swift */; };
 		D8F45D3922CE9F9E006E087D /* NotesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F45D3822CE9F9E006E087D /* NotesCell.swift */; };
+		D8F45D3C22CF3DB2006E087D /* NoteFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F45D3B22CF3DB2006E087D /* NoteFolder.swift */; };
+		D8F45D3E22CF3DBD006E087D /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F45D3D22CF3DBD006E087D /* Note.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		D8F45D3322CD4A4A006E087D /* NoteDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetailController.swift; sourceTree = "<group>"; };
 		D8F45D3622CE990B006E087D /* FolderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderCell.swift; sourceTree = "<group>"; };
 		D8F45D3822CE9F9E006E087D /* NotesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesCell.swift; sourceTree = "<group>"; };
+		D8F45D3B22CF3DB2006E087D /* NoteFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteFolder.swift; sourceTree = "<group>"; };
+		D8F45D3D22CF3DBD006E087D /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +66,7 @@
 		D8F45D1A22CA975C006E087D /* NotesApp */ = {
 			isa = PBXGroup;
 			children = (
+				D8F45D3A22CF3D89006E087D /* Models */,
 				D8F45D3522CE98EB006E087D /* Cells */,
 				D8F45D3022CAA88F006E087D /* Extention */,
 				D8F45D2D22CAA0A7006E087D /* Controllers */,
@@ -98,6 +103,15 @@
 				D8F45D3822CE9F9E006E087D /* NotesCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		D8F45D3A22CF3D89006E087D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D8F45D3B22CF3DB2006E087D /* NoteFolder.swift */,
+				D8F45D3D22CF3DBD006E087D /* Note.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -175,6 +189,8 @@
 				D8F45D2F22CAA0E4006E087D /* FolderNotesController.swift in Sources */,
 				D8F45D1C22CA975C006E087D /* AppDelegate.swift in Sources */,
 				D8F45D3422CD4A4A006E087D /* NoteDetailController.swift in Sources */,
+				D8F45D3E22CF3DBD006E087D /* Note.swift in Sources */,
+				D8F45D3C22CF3DB2006E087D /* NoteFolder.swift in Sources */,
 				D8F45D3922CE9F9E006E087D /* NotesCell.swift in Sources */,
 				D8F45D3722CE990B006E087D /* FolderCell.swift in Sources */,
 			);
