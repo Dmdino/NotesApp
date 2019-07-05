@@ -8,7 +8,27 @@
 
 import UIKit
 
+
+let firstFolderNotes = [
+    Note(title: "UITable views", date: Date(), text: "Table view use protocol to recieve data"),
+    Note(title: "Collection views", date: Date(), text: "Collection views could be customized"),
+    Note(title: "Flow layuots", date: Date(), text: "Custom layouts can be made with  UICollectionViewFlowLayuot"),
+]
+
+let secondFolderNotes = [
+    Note(title: "Instagram", date: Date(), text: "I have two Instagram accounts. maxcodes && maxcodes.io"),
+    Note(title: "YouTube Channels", date: Date(), text: "I also have two youtube channels. One for iOS development videos, another for developer vlogs.")
+]
+
+var noteFolders: [NoteFolder] = [
+    NoteFolder(title: "Course notes", notes: firstFolderNotes),
+    NoteFolder(title: "Social Media", notes: secondFolderNotes)
+]
+
+
 class FoldersController: UITableViewController {
+    
+    // MARK: - Properties
     
     fileprivate let cellId = "cellId"
     
@@ -38,7 +58,7 @@ class FoldersController: UITableViewController {
         
         let items: [UIBarButtonItem] = [
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
-            UIBarButtonItem(title: "New Folder", style: .done, target: self, action: nil)
+            UIBarButtonItem(title: "New Folder", style: .done, target: self, action: #selector(hadleAddNewFolder))
         ]
         
         self.toolbarItems = items
@@ -81,17 +101,46 @@ class FoldersController: UITableViewController {
         navBar?.setBackgroundImage(slightWhite, for: .default)
         navBar?.shadowImage = slightWhite
     }
+    
+    // MARK: - Handlers
+    
+    var textField: UITextField!
+    
+    @objc func hadleAddNewFolder() {
+        let addAlert = UIAlertController(title: "New Folder", message: "Enter a name for this folder", preferredStyle: .alert)
+        
+        addAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (_) in
+            addAlert.dismiss(animated: true)
+        }))
+        
+        addAlert.addTextField { (tf) in
+            self.textField = tf
+        }
+        
+        addAlert.addAction(UIAlertAction(title: "Save", style: .default, handler: { (_) in
+            addAlert.dismiss(animated: true)
+            
+            guard let title = self.textField.text else {return}
+            let newFolder = NoteFolder(title: title, notes: [])
+            noteFolders.append(newFolder)
+            self.tableView.insertRows(at: [IndexPath(row: noteFolders.count - 1, section: 0)], with: .fade)
+        }))
+        
+        present(addAlert, animated: true)
+    }
 
 }
 
 extension FoldersController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        return noteFolders.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! FolderCell
+        let folderForRow = noteFolders[indexPath.row]
+        cell.folderData = folderForRow
         return cell
     }
     
@@ -101,6 +150,8 @@ extension FoldersController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let folderNotesController = FolderNotesController()
+        let folderForRowSelected = noteFolders[indexPath.row]
+        folderNotesController.folderData = folderForRowSelected
         navigationController?.pushViewController(folderNotesController, animated: true)
     }
 }

@@ -12,21 +12,29 @@ class FolderCell: UITableViewCell {
     
     // MARK: - Properties
     
-    fileprivate var label: UILabel = {
+    var folderData: NoteFolder?{
+        didSet {
+            guard let folderData = folderData else {return}
+            label.text = folderData.title
+            countLabel.text = String(folderData.notes.count)
+        }
+    }
+    
+     var label: UILabel = {
         let label = UILabel()
         label.text = "Title"
         label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         return label
     }()
     
-    fileprivate var countLabel:UILabel = {
+     var countLabel:UILabel = {
         let label = UILabel()
         label.text = "5"
         label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         return label
     }()
     
-    fileprivate lazy var stack: UIStackView = {
+     lazy var stack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [label, countLabel])
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = .horizontal
