@@ -18,6 +18,8 @@
 		D8F45D3922CE9F9E006E087D /* NotesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F45D3822CE9F9E006E087D /* NotesCell.swift */; };
 		D8F45D3C22CF3DB2006E087D /* NoteFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F45D3B22CF3DB2006E087D /* NoteFolder.swift */; };
 		D8F45D3E22CF3DBD006E087D /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F45D3D22CF3DBD006E087D /* Note.swift */; };
+		D8F45D4122CFBF31006E087D /* NotesApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D8F45D3F22CFBF31006E087D /* NotesApp.xcdatamodeld */; };
+		D8F45D4322CFC9E0006E087D /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F45D4222CFC9E0006E087D /* CoreDataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		D8F45D3822CE9F9E006E087D /* NotesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesCell.swift; sourceTree = "<group>"; };
 		D8F45D3B22CF3DB2006E087D /* NoteFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteFolder.swift; sourceTree = "<group>"; };
 		D8F45D3D22CF3DBD006E087D /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
+		D8F45D4022CFBF31006E087D /* NotesApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NotesApp.xcdatamodel; sourceTree = "<group>"; };
+		D8F45D4222CFC9E0006E087D /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +70,7 @@
 		D8F45D1A22CA975C006E087D /* NotesApp */ = {
 			isa = PBXGroup;
 			children = (
+				D8F45D4422CFD06F006E087D /* CoreData Manager */,
 				D8F45D3A22CF3D89006E087D /* Models */,
 				D8F45D3522CE98EB006E087D /* Cells */,
 				D8F45D3022CAA88F006E087D /* Extention */,
@@ -74,6 +79,7 @@
 				D8F45D2222CA975F006E087D /* Assets.xcassets */,
 				D8F45D2422CA975F006E087D /* LaunchScreen.storyboard */,
 				D8F45D2722CA975F006E087D /* Info.plist */,
+				D8F45D3F22CFBF31006E087D /* NotesApp.xcdatamodeld */,
 			);
 			path = NotesApp;
 			sourceTree = "<group>";
@@ -112,6 +118,14 @@
 				D8F45D3D22CF3DBD006E087D /* Note.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		D8F45D4422CFD06F006E087D /* CoreData Manager */ = {
+			isa = PBXGroup;
+			children = (
+				D8F45D4222CFC9E0006E087D /* CoreDataManager.swift */,
+			);
+			path = "CoreData Manager";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -187,12 +201,14 @@
 				D8F45D3222CAA8AC006E087D /* Extention.swift in Sources */,
 				D8F45D1E22CA975C006E087D /* FoldersController.swift in Sources */,
 				D8F45D2F22CAA0E4006E087D /* FolderNotesController.swift in Sources */,
+				D8F45D4122CFBF31006E087D /* NotesApp.xcdatamodeld in Sources */,
 				D8F45D1C22CA975C006E087D /* AppDelegate.swift in Sources */,
 				D8F45D3422CD4A4A006E087D /* NoteDetailController.swift in Sources */,
 				D8F45D3E22CF3DBD006E087D /* Note.swift in Sources */,
 				D8F45D3C22CF3DB2006E087D /* NoteFolder.swift in Sources */,
 				D8F45D3922CE9F9E006E087D /* NotesCell.swift in Sources */,
 				D8F45D3722CE990B006E087D /* FolderCell.swift in Sources */,
+				D8F45D4322CFC9E0006E087D /* CoreDataManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -384,6 +400,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		D8F45D3F22CFBF31006E087D /* NotesApp.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				D8F45D4022CFBF31006E087D /* NotesApp.xcdatamodel */,
+			);
+			currentVersion = D8F45D4022CFBF31006E087D /* NotesApp.xcdatamodel */;
+			path = NotesApp.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = D8F45D1022CA975C006E087D /* Project object */;
 }

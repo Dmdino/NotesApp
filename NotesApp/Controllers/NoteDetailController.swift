@@ -8,25 +8,45 @@
 
 import UIKit
 
+protocol NoteDelegate {
+    func saveNewNote(title: String, date: Date, text: String)
+}
+
 class NoteDetailController: UIViewController {
     
     // MARK: - Properties
     
+    let dateFormatter: DateFormatter = {
+        let dateFormater = DateFormatter()
+        dateFormater.dateFormat = "dd MMMM, yyyy, 'at' hh:mm a"
+        return dateFormater
+    }()
+    
+    var noteData: Note? {
+        didSet {
+            guard let noteData = noteData else {return}
+            textView.text = noteData.title
+            dateLabel.text = dateFormatter.string(from: noteData.date ?? Date())
+        }
+    }
+    
+    var delegate: NoteDelegate?
+    
     fileprivate let textView: UITextView = {
         let tv = UITextView()
         tv.translatesAutoresizingMaskIntoConstraints = false
-        tv.text = "Sample of text"
+        tv.text = ""
         tv.isEditable = true
         tv.font = UIFont.systemFont(ofSize: 18, weight: .regular)
         return tv
     }()
     
-    fileprivate var dateLabel: UILabel = {
+    fileprivate lazy var dateLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 14, weight: .light)
         label.textColor = .lightGray
-        label.text = "06.07.2017"
+        label.text = dateFormatter.string(from: Date())
         label.textAlignment = .center
         return label
     }()
@@ -39,6 +59,19 @@ class NoteDetailController: UIViewController {
         view.backgroundColor = .white
         
         setupUI()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if self.noteData == nil {
+            delegate?.saveNewNote(title: textView.text, date: Date(), text: textView.text)
+        } else {
+            // update note
+            guard let newText = textView.text else {return}
+            guard let noteData = self.noteData else {return}
+            CoreDataManager.shared.saveUdatedNote(note: noteData, newText: newText)
+        }
     }
     
     // MARK: - Constraints

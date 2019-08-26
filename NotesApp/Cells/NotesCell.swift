@@ -10,18 +10,18 @@ import UIKit
 
 class NotesCell: UITableViewCell {
     
+    // MARK: - Properties
+    
     var noteData: Note? {
         didSet {
             let dateFormater = DateFormatter()
-            dateFormater.dateFormat = "dd MM, yyyy "
+            dateFormater.dateFormat = "dd/MM/yy"
             guard let noteData = noteData else {return}
             noteLabel.text = noteData.title
-            dateLabel.text = dateFormater.string(from: noteData.date)
+            dateLabel.text = dateFormater.string(from: noteData.date ?? Date())
             previewLabel.text = noteData.text
         }
     }
-    
-    // MARK: - Properties
     
      var noteLabel: UILabel = {
         let label = UILabel()

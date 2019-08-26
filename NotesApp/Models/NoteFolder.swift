@@ -9,7 +9,7 @@
 import Foundation
 
 
-struct NoteFolder {
-    var title: String
-    var notes: [Note]
-}
+//struct NoteFolder {
+//    var title: String
+//    var notes: [Note]
+//}

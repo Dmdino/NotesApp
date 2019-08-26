@@ -8,14 +8,14 @@
 
 import UIKit
 
-class FolderNotesController: UITableViewController, UISearchBarDelegate {
+class FolderNotesController: UITableViewController, UISearchBarDelegate, NoteDelegate {
     
     let searchController = UISearchController(searchResultsController: nil)
     
-    var folderData: NoteFolder?{
+    var folderData: NoteFolder!{
         didSet {
-            guard let folderData = folderData else {return}
-            notes = folderData.notes
+
+            notes = CoreDataManager.shared.fetchNotes(from: folderData)
             filteredNotes = notes
         }
     }
@@ -41,18 +41,25 @@ class FolderNotesController: UITableViewController, UISearchBarDelegate {
         let items: [UIBarButtonItem] = [
             UIBarButtonItem(barButtonSystemItem: .organize, target: nil, action: nil),
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
-            UIBarButtonItem(title: "5 notes", style: .done, target: nil, action: nil),
+            UIBarButtonItem(title: "\(notes.count) Notes", style: .done, target: nil, action: nil),
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
             UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(createNewNote))
         ]
         
         self.toolbarItems = items
+        
+        tableView.reloadData()
     }
     
     @objc fileprivate func createNewNote() {
         let noteDetailController = NoteDetailController()
+        
+        noteDetailController.delegate = self
+        
         navigationController?.pushViewController(noteDetailController, animated: true)
     }
+    
+    // MARK: - Setups
     
     fileprivate func setupTableView() {
         tableView.register(NotesCell.self, forCellReuseIdentifier: cellId)
@@ -66,11 +73,20 @@ class FolderNotesController: UITableViewController, UISearchBarDelegate {
         searchController.searchBar.delegate = self
     }
     
+    // MARK: - Save notes
+    
+    func saveNewNote(title: String, date: Date, text: String) {
+        let newNote = CoreDataManager.shared.createNewNote(title: title, date: date, text: text, noteFolder: self.folderData)
+        notes.append(newNote)
+        filteredNotes.append(newNote)
+        self.tableView.insertRows(at: [IndexPath(row: notes.count - 1, section: 0)], with: .fade)
+    }
+    
     // MARK: - Search function
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         filteredNotes = notes.filter({ (note) -> Bool in
-            return note.title.lowercased().contains(searchText.lowercased())
+            return note.title?.lowercased().contains(searchText.lowercased()) ?? false
         })
         
         if searchBar.text!.isEmpty && filteredNotes.isEmpty {
@@ -98,11 +114,14 @@ extension FolderNotesController {
             print("trying to delete items", indexPath)
             
             let targetRow = indexPath.row
-            self.notes.remove(at: targetRow)
-            self.filteredNotes.remove(at: targetRow)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-            
+            // remove from coredata
+            if CoreDataManager.shared.deleteNote(note: self.notes[targetRow]) {
+                self.notes.remove(at: targetRow)
+                self.filteredNotes.remove(at: targetRow)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
         }
+        
         actions.append(deleteAction)
         return actions
     }
@@ -120,6 +139,8 @@ extension FolderNotesController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let noteDetailController = NoteDetailController()
+        let noteForRow = self.filteredNotes[indexPath.row]
+        noteDetailController.noteData = noteForRow
         navigationController?.pushViewController(noteDetailController, animated: true)
     }
     
